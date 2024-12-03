@@ -1,0 +1,11 @@
+#define BOT_TOKEN "[put your token here]"
+#define NUM_NODES 3
+#define NODE1_IP "192.168.1.20"
+#define NODE1_DESCRIPTION "Techflash's bedroom Wii"
+#define NODE1_CONNECTION "local-wifi"
+#define NODE2_IP "10.2.30.5"
+#define NODE2_DESCRIPTION "Selim's bedroom Wii"
+#define NODE2_CONNECTION "vpn-wifi"
+#define NODE3_IP "10.2.30.6"
+#define NODE3_DESCRIPTION "Dakotath's Wii"
+#define NODE3_CONNECTION "vpn-ethernet"
