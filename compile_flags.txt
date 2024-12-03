@@ -1,3 +1,6 @@
--Isrc/include
+-Isrc/frontend/include
+-Isrc/backend/include
 -Wall
 -Wextra
+-DNODE_VER="0.0.1"
+-DAPP_VER="0.0.1"
