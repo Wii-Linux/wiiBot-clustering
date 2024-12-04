@@ -1,6 +1,5 @@
 #include <concord/discord_codecs.h>
 #include <concord/types.h>
-#include <signal.h>
 #include <string.h>
 #include <concord/discord.h>
 #include <concord/log.h>

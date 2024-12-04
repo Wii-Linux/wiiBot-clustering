@@ -3,7 +3,7 @@
 #include <common/config.h>
 #define BOT_TOKEN "[your token here]"
 #define NUM_NODES 3
-static node_t nodes[NUM_NODES] = {
+static node_t nodes[NUM_NODES] __attribute__((unused)) = {
 	{
 		.ip = "192.168.1.20",
 		.port = DEFAULT_PORT,

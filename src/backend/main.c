@@ -7,8 +7,7 @@
 static pthread_t netThread;
 static int netId;
 
-int main(int argc, char *argv[]) {
-	(void)argc;
+int main() {
 	puts("WiiBot Node v" NODE_VER " is starting up...");
 	while (true) {
 		pthread_create(&netThread, NULL, startNet, &netId);
