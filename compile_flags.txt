@@ -1,5 +1,4 @@
--Isrc/frontend/include
--Isrc/backend/include
+-Isrc/include
 -Wall
 -Wextra
 -DNODE_VER="0.0.1"

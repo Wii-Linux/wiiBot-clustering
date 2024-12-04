@@ -1,9 +1,9 @@
 CC = gcc
 LD = $(CC)
 
-CFLAGS-COMMON = -Wall -Wextra -g -Isrc/frontend/include -std=gnu11 -MMD -MP -fsanitize=address
-CFLAGS-FRONT = $(CFLAGS-COMMON)
-CFLAGS-BACK = $(CFLAGS-COMMON)
+CFLAGS-COMMON = -Wall -Wextra -g -Isrc/include -std=gnu11 -MMD -MP -fsanitize=address
+CFLAGS-FRONT = $(CFLAGS-COMMON) -DAPP_VER=\"0.0.1\"
+CFLAGS-BACK = $(CFLAGS-COMMON) -DNODE_VER=\"0.0.1\"
 
 LIBS-FRONT = -pthread -lasan -ldiscord -lcurl
 LIBS-BACK = -lasan
@@ -39,7 +39,7 @@ $(BIN-FRONT): $(OBJ-FRONT)
 build/backend/%.o: src/backend/%.c
 	@mkdir -p $(@D)
 	@$(info $S  CC $(patsubst src/backend/%.c,%.c,$<) ==> $(patsubst build/backend/%.o,%.o,$@))
-	@$(CC) $(CFLAGS-FRONT) -c $< -o $@
+	@$(CC) $(CFLAGS-BACK) -c $< -o $@
 
 build/frontend/%.o: src/frontend/%.c
 	@mkdir -p $(@D)
