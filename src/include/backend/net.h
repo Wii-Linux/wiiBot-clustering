@@ -1,1 +1,1 @@
-extern void startNet();
+extern void *startNet(void *arg);

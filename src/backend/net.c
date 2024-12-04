@@ -9,14 +9,15 @@
 #include <common/packet.h>
 #include <common/config.h>
 
-void startNet() {
+void *startNet(void *arg) {
+	(void)arg;
 	puts("Hello from network thread");
 
 	// initialize a socket so the central server can connect to us
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		perror("socket");
-		return;
+		return NULL;
 	}
 
 	int option = 1;
@@ -31,13 +32,13 @@ void startNet() {
 	// bind the socket to the server address
 	if (bind(sockfd, (struct sockaddr *)&server, sizeof(server)) < 0) {
 		perror("bind");
-		return;
+		return NULL;
 	}
 
 	// listen for incoming connections
 	if (listen(sockfd, 1) < 0) {
 		perror("listen");
-		return;
+		return NULL;
 	}
 
 	struct sockaddr_in client;
@@ -52,7 +53,7 @@ void startNet() {
 	// accept a connection
 	if (connfd < 0) {
 		perror("accept");
-		return;
+		return NULL;
 	}
 	puts("accepted");
 
@@ -65,7 +66,7 @@ void startNet() {
 			perror("recv");
 			free(recvbuf);
 			free(sendbuf);
-			return;
+			return NULL;
 		}
 
 
@@ -78,5 +79,5 @@ void startNet() {
 		}
 	}
 
-	return;
+	return NULL;
 }

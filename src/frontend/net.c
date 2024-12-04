@@ -10,14 +10,15 @@
 #include <frontend/config.h>
 #include <unistd.h>
 
-void startNet() {
+void *startNet(void *arg) {
+	(void)arg;
 	puts("Hello from network thread");
 
 	// initialize a socket so the central server can connect to us
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		perror("socket");
-		return;
+		return NULL;
 	}
 
 	struct sockaddr_in addr[NUM_NODES];
@@ -30,12 +31,12 @@ void startNet() {
 
 		if (connfd[i] < 0) {
 			perror("connect");
-			return;
+			return NULL;
 		}
 	}
 
 	while (true) {
-		// check for new messages
+		// check for new messages from nodes
 
 		// respond to, or take note of, any messages recieved
 
@@ -50,5 +51,5 @@ void startNet() {
 
 	close(sockfd);
 
-	return;
+	return NULL;
 }

@@ -11,11 +11,12 @@
 #include <frontend/config.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <backend/net.h>
 
 u64snowflake ourID = 0;
-static int netpid = 0;
-
+static pthread_t netThread;
+static int netId;
 
 void on_ready(struct discord *client, const struct discord_ready *event) {
 	(void)client;
@@ -60,39 +61,16 @@ void on_message(struct discord *client, const struct discord_message *event) {
 	// discord_create_message(client, event->channel_id, &params, NULL);
 }
 
-static int startNetThread(void) {
-	pid_t pid = fork();
-
-	if (pid == -1) {
-		perror("fork");
-		return 1;
+static void *__startNet(void *arg) {
+	while (true) {
+		startNet(arg);
+		puts("\e[1;31m\e[1;1mNetwork thread exited, restarting\e[0m");
 	}
-
-	else if (pid == 0) {
-		startNet();
-		exit(0);
-	}
-
-	printf("Network thread started with pid %d\n", pid);
-	netpid = pid;
-	return 0;
+	return NULL;
 }
-
-static void sigchldHandler(int sig) {
-	(void)sig;
-	int status;
-
-	puts("got sigchld");
-	waitpid(netpid, &status, WNOHANG);
-
-	printf("network thread exited with status %d\nrestarting it...\n", status);
-	startNetThread();
-}
-
 
 int main(void) {
-	signal(SIGCHLD, sigchldHandler);
-	startNetThread();
+	pthread_create(&netThread, NULL, __startNet, &netId);
 
 	struct discord *client = discord_init(BOT_TOKEN);
 
